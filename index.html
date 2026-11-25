@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="uk"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Апострофний скарб</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#dff3ff;--card:#fff;--ink:#17324d;--mut:#5a7590;--gold:#ffc83d;--gi:#4a3500;--ok:#d9f7e6;--okb:#2fbf71;--no:#ffe1e1;--nob:#ef5b5b;--line:#b9dcf2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f2538;--card:#173551;--ink:#eaf5ff;--mut:#9bb6cc;--ok:#14452d;--no:#4d2226;--line:#2b5273;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0f2538;--card:#173551;--ink:#eaf5ff;--mut:#9bb6cc;--ok:#14452d;--no:#4d2226;--line:#2b5273;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 1.05rem/1.45 Nunito,system-ui,sans-serif;min-height:100vh}
+main{max-width:640px;margin:0 auto;padding:14px}
+.hud{display:flex;gap:10px;align-items:center;justify-content:space-between;font-weight:800}
+.hud span{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:4px 12px}
+#pts.b{animation:bump .4s}@keyframes bump{50%{transform:scale(1.3);background:var(--gold);color:var(--gi)}}
+.rn{color:var(--mut);margin:8px 2px 4px;font-size:.95rem}
+.track{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:12px}
+#bar{height:100%;width:0;background:var(--gold);transition:width .4s}
+.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:20px;text-align:center}
+.ask{margin:0 0 10px;color:var(--mut)}
+.word{font-size:clamp(2.6rem,12vw,4rem);font-weight:900;letter-spacing:.02em;margin:10px 0 20px;overflow-wrap:anywhere}
+.gap{display:inline-block;min-width:1.1ch;background:var(--gold);color:var(--gi);border-radius:12px;font-style:normal;padding:0 .18em;animation:pulse 1.2s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.two,.grid{display:grid;gap:12px}.two{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}
+button{font:inherit;font-weight:800;color:var(--ink);cursor:pointer}
+.ch{min-height:68px;border:3px solid var(--line);background:var(--bg);border-radius:18px;padding:10px;font-size:1.1rem}
+.ch:hover:not(:disabled){border-color:var(--gold)}
+.ch.ok{background:var(--ok);border-color:var(--okb)}.ch.no{background:var(--no);border-color:var(--nob)}
+.ap{display:block;font-size:2rem;line-height:1}
+.opt{font-size:1.5rem;min-height:80px}
+.fb{margin-top:14px;border-radius:20px;padding:14px 18px;border:3px solid}
+.fb.ok{background:var(--ok);border-color:var(--okb)}.fb.no{background:var(--no);border-color:var(--nob)}
+.fb p{margin:6px 0 12px}
+.go,.big{background:var(--gold);color:var(--gi);border:0;border-radius:16px;padding:12px 26px;font-size:1.1rem;box-shadow:0 4px 0 #c9951a}
+.big{font-size:1.3rem;padding:16px 34px;margin-top:10px}
+.ghost{background:none;border:2px dashed var(--line);border-radius:14px;padding:8px 16px;margin-top:14px;color:var(--mut)}
+.slots,.tiles{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.slot{width:52px;height:64px;border-bottom:4px solid var(--mut);font-size:2rem;font-weight:900;display:grid;place-items:center}
+.slot.f{border-color:var(--okb)}
+.tile{width:58px;height:66px;font-size:2rem;font-weight:900;border:3px solid var(--line);background:var(--bg);border-radius:16px;box-shadow:0 4px 0 var(--line)}
+.tile.apt{background:var(--gold);color:var(--gi);border-color:#c9951a}
+.tile:disabled{opacity:.25;cursor:default}
+.shake{animation:sh .4s}@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.mas{font-size:4.5rem;line-height:1}
+h1{font-size:2rem;margin:6px 0}
+details{text-align:left;margin-top:16px;background:var(--bg);border-radius:14px;padding:10px 14px}
+details li{margin:4px 0}
+.stars{font-size:3rem}
+.tw{background:var(--bg);border-radius:16px;padding:12px;font-weight:900;font-size:1.2rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body><main>
+<div class="hud"><span>⭐ <b id="pts">0</b></span><span id="stl">🔥 серія 0</span></div>
+<div class="rn" id="rn"></div><div class="track"><div id="bar"></div></div>
+<div class="card" id="c"></div><div id="f"></div>
+</main>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const RULE={
+A:"Перед я, ю, є, ї після б, п, в, м, ф пишемо апостроф.",
+B:"Після твердого р перед я, ю, є, ї пишемо апостроф.",
+C:"Після префікса на приголосний перед я, ю, є, ї пишемо апостроф.",
+D:"Виняток: у слові Лук’ян і споріднених апостроф стоїть після к.",
+E:"Перед б, п, в, м, ф стоїть кореневий приголосний (не р), тому апострофа нема.",
+F:"Після м’якого [р’] апострофа нема.",
+G:"Якщо перед в, ф, б стоїть кореневий р, апостроф є.",
+H:"Після префікса немає я, ю, є, ї, тому апострофа нема."};
+const R1=[["п_ять",1,"A"],["бур_ян",1,"B"],["об_єкт",1,"C"],["м_який",1,"A"],["подвір_я",1,"B"],["з_явитись",1,"C"],["під_їхати",1,"C"],["Лук_ян",1,"D"],["сім_я",1,"A"],["черв_як",1,"G"],["торф_яний",1,"G"],["пам_ять",1,"A"],["св_ято",0,"E"],["цв_ях",0,"E"],["моркв_яний",0,"E"],["р_ясний",0,"F"],["дзв_якнути",0,"E"],["духм_яний",0,"E"],["пор_ядок",0,"F"]];
+const R2=[[["сім’я","п’ять","бур’ян"],"подвіря","подвір’я","B"],[["м’ята","черв’як","пір’я"],"зявитись","з’явитись","C"],[["під’їхати","об’єкт","кур’єр"],"р’юкзак","рюкзак","F"],[["Лук’ян","матір’ю","зв’язати"],"моркв’яний","морквяний","E"],[["роз’яснення","зав’язь","в’їзний"],"дзв’якнути","дзвякнути","E"],[["торф’яний","верб’я","без’язикий"],"заг’ітувати","загітувати","H"]];
+const R3=[["п’ять","число після чотирьох","A"],["сім’я","мама, тато, діти","A"],["м’ята","запашна трава для чаю","A"],["пір’я","його мають птахи","B"],["об’єкт","предмет, на який спрямована увага","C"],["подвір’я","територія біля будинку","B"]];
+const NAMES=["Апостроф чи ні?","Знайди помилку","Склади слово","Чому так?","Блискавка"];
+const LBL={A:"після б, п, в, м, ф перед я, ю, є, ї",B:"після твердого р",C:"після префікса на приголосний",D:"виняток: Лук’ян і споріднені слова",E:"кореневий приголосний перед б, п, в, м, ф: апострофа нема",F:"м’який [р’]: апострофа нема",H:"після префікса немає я, ю, є, ї: апострофа нема"};
+const R4=[["сім’я","A"],["подвір’я","B"],["з’явитись","C"],["Лук’ян","D"],["свято","E"],["рясний","F"],["загітувати","H"],["бур’ян","B"],["під’їхати","C"],["духмяний","E"],["пам’ять","A"],["порядок","F"]];
+const R5=[["Нащо й клад, коли в ___ лад.",["сім’ї","сімї","сі’мї"],"A"],["Праця – ___, лінь – хвороба.",["здоров’я","здоровя","здоро’вя"],"A"],["Людям язика не ___.",["зав’яжеш","завяжеш","за’вяжеш"],"A"],["Хто добро зробив, того довіку ___.",["пам’ятай","памятай","п’амятай"],"A"],["Готовеньке і кішка ___.",["з’їсть","зїсть","зї’сть"],"C"],["Знає кіт, чиє сало ___.",["з’їв","зїв","зі’їв"],"C"],["Розумний птах шкодує ___.",["пір’я","піря","пі’рья"],"B"],["Де колись були ___, там тепер широкі лани.",["бур’яни","буряни","бу’ряни"],"B"],["У Лук’яна – в’язка ___.",["м’яти","мяти","мя’ти"],"A"]];
+let S,q,i,rd,redo,T,tm;
+const mult=()=>Math.min(4,1+Math.floor(S.st/3));
+function hud(){$("#pts").textContent=S.pts;$("#stl").textContent="🔥 серія "+S.st+(mult()>1?" (×"+mult()+")":"");$("#bar").style.width=(rd<0?0:i/q.length*100)+"%";$("#rn").textContent=rd<0?"":"Рівень "+(rd+1)+" з 5: "+NAMES[rd];const p=$("#pts");p.classList.remove("b");void p.offsetWidth;p.classList.add("b")}
+function win(base){const g=base*mult();S.pts+=g;S.st++;S.best=Math.max(S.best,S.st);S.ok++;S.n++;return g}
+function lose(){S.st=0;S.n++}
+function lock(){$$(".ch").forEach(b=>b.disabled=true)}
+function fb(good,g,txt){$("#f").innerHTML=`<div class="fb ${good?"ok":"no"}"><b>${good?"Так! +"+g+" ⭐":"Ой, не так."}</b><p>${txt}</p><button class="go" id="nx">Далі</button></div>`;$("#nx").onclick=next;$("#nx").focus();hud()}
+function next(){clearInterval(tm);i++;if(i>=q.length&&redo.length){q=q.concat(redo);redo=[]}if(i<q.length)SHOW[rd]();else if(rd<4)round(rd+1);else end()}
+function round(r){rd=r;i=0;redo=[];q=r==0?sh(R1).map(x=>({d:x[0],a:x[1],k:x[2]})):r==1?sh(R2).map(x=>({ok:x[0],bad:x[1],fix:x[2],k:x[3]})):r==2?sh(R3).map(x=>({w:x[0],h:x[1],k:x[2]})):r==3?sh(R4).slice(0,8).map(x=>({w:x[0],k:x[1]})):sh(R5).slice(0,8).map(x=>({s:x[0],o:x[1],k:x[2]}));hud();SHOW[r]()}
+function s1(){const t=q[i];$("#c").innerHTML=`<p class="ask">Чи потрібен апостроф у цьому слові?</p><div class="word">${t.d.replace("_",'<i class="gap">?</i>')}</div><div class="two"><button class="ch" data-v="1"><span class="ap">’</span>Так, апостроф</button><button class="ch" data-v="0"><span class="ap">×</span>Ні, без апострофа</button></div>`;$("#f").innerHTML="";$$(".ch").forEach(b=>b.onclick=()=>a1(b,+b.dataset.v))}
+function a1(b,v){const t=q[i],good=v==t.a;lock();b.classList.add(good?"ok":"no");const w=t.d.replace("_",t.a?"’":"");$(".word").textContent=w;let g=0;if(good)g=win(10);else{lose();if(!t.r)redo.push({...t,r:1})}fb(good,g,`<b>${w}</b>. ${RULE[t.k]}${!good&&!t.r?" Це слово ще повернеться!":""}`)}
+function s2(){const t=q[i];const ws=sh([...t.ok.map(w=>({w,e:0})),{w:t.bad,e:1}]);$("#c").innerHTML=`<p class="ask">Одне слово написане з помилкою. Знайди його!</p><div class="grid">${ws.map(x=>`<button class="ch opt" data-e="${x.e}">${x.w}</button>`).join("")}</div>`;$("#f").innerHTML="";$$(".opt").forEach(b=>b.onclick=()=>a2(b))}
+function a2(b){const t=q[i],good=b.dataset.e=="1";lock();b.classList.add(good?"ok":"no");$$(".opt").forEach(o=>{if(o.dataset.e=="1"){o.innerHTML=`<s>${t.bad}</s><br>${t.fix}`;o.classList.add("ok")}});let g=0;if(good)g=win(20);else lose();fb(good,g,`${good?"Знайшов(ла) помилку.":"Помилка була в іншому слові."} Правильно: <b>${t.fix}</b>. ${RULE[t.k]}`)}
+function s3(){const t=q[i];T={t,tries:0,b:[],tiles:sh([...t.w].map(c=>({c})))};$("#f").innerHTML="";d3()}
+function d3(){const t=T.t;$("#c").innerHTML=`<p class="ask">Склади слово: ${t.h}</p><div class="slots">${[...t.w].map((_,j)=>`<span class="slot ${T.b[j]?"f":""}">${T.b[j]?T.b[j].c:""}</span>`).join("")}</div><div class="tiles">${T.tiles.map((x,j)=>`<button class="tile ${x.c=="’"?"apt":""}" data-j="${j}" ${T.b.includes(x)?"disabled":""}>${x.c}</button>`).join("")}</div><button class="ghost" id="un">⌫ Стерти літеру</button>`;$$(".tile").forEach(b=>b.onclick=()=>{T.b.push(T.tiles[+b.dataset.j]);if(T.b.length==[...t.w].length)chk();else d3()});$("#un").onclick=()=>{T.b.pop();d3()}}
+function chk(){const w=T.b.map(x=>x.c).join("");if(w==T.t.w){d3();$$(".tile,#un").forEach(b=>b.disabled=true);let g;if(T.tries==0)g=win(30);else{g=10;S.pts+=10}fb(true,g,`<b>${w}</b>. ${RULE[T.t.k]}`)}else{if(T.tries==0)lose();T.tries++;T.b=[];d3();$("#c").classList.remove("shake");void $("#c").offsetWidth;$("#c").classList.add("shake");$("#f").innerHTML=`<div class="fb no"><b>Майже!</b> Подивись, де стоїть золотий апостроф, і спробуй ще.</div>`;hud()}}
+function s4(){const t=q[i];const ks=sh(Object.keys(LBL).filter(k=>k!=t.k)).slice(0,3).concat(t.k);$("#c").innerHTML=`<p class="ask">Яке правило пояснює написання цього слова?</p><div class="word">${t.w}</div><div class="grid" style="grid-template-columns:1fr">${sh(ks).map(k=>`<button class="ch" data-k="${k}">${LBL[k]}</button>`).join("")}</div>`;$("#f").innerHTML="";$$(".ch").forEach(b=>b.onclick=()=>a4(b))}
+function a4(b){const t=q[i],good=b.dataset.k==t.k;lock();b.classList.add(good?"ok":"no");$$(".ch").forEach(o=>{if(o.dataset.k==t.k)o.classList.add("ok")});let g=0;if(good)g=win(40);else lose();fb(good,g,`<b>${t.w}</b>. ${RULE[t.k]}`)}
+function s5(){const t=q[i];let left=200;$("#c").innerHTML=`<p class="ask">Блискавка! Вибери правильне написання, поки не вичерпався час.</p><div class="track"><div id="tb" style="height:100%;background:var(--nob);width:100%"></div></div><div class="word" style="font-size:clamp(1.4rem,5vw,2rem)">${t.s.replace("___",'<i class="gap">?</i>')}</div><div class="grid" style="grid-template-columns:1fr">${sh(t.o).map(w=>`<button class="ch opt" data-w="${w}">${w}</button>`).join("")}</div>`;$("#f").innerHTML="";$$(".opt").forEach(b=>b.onclick=()=>a5(b.dataset.w,b));tm=setInterval(()=>{left--;$("#tb").style.width=left/2+"%";if(left<=0)a5(null)},100)}
+function a5(w,b){clearInterval(tm);const t=q[i],good=w===t.o[0];lock();if(b)b.classList.add(good?"ok":"no");$$(".opt").forEach(o=>{if(o.dataset.w===t.o[0])o.classList.add("ok")});let g=0;if(good)g=win(50);else lose();fb(good,g,`${w===null?"Час вичерпався. ":""}Правильно: <b>${t.o[0]}</b>. ${RULE[t.k]}`)}
+const SHOW=[s1,s2,s3,s4,s5];
+function end(){rd=-1;const acc=S.n?S.ok/S.n:0,st=acc>=.9?3:acc>=.7?2:1,tt=["Учень-апострофик","Знавець апострофа","Майстер апострофа"][st-1];hud();$("#bar").style.width="100%";$("#f").innerHTML="";$("#c").innerHTML=`<div class="mas">🏆</div><h1>${tt}!</h1><div class="stars">${"⭐".repeat(st)}${"☆".repeat(3-st)}</div><p>Бали: <b>${S.pts}</b>. Правильних відповідей: <b>${S.ok} з ${S.n}</b>. Найдовша серія: <b>${S.best}</b>.</p><p class="ask">Фінальне завдання: прочитай скоромовку вголос і не помились!</p><div class="tw">У Лук’яна – в’язка м’яти.<br>У Дем’яна – дев’ять в’язок.</div><button class="big" id="again">Зіграти ще раз</button>`;$("#again").onclick=start}
+function start(){S={pts:0,st:0,best:0,ok:0,n:0};rd=-1;q=[];i=0;hud();$("#f").innerHTML="";$("#c").innerHTML=`<div class="mas">🦔</div><h1>Апострофний скарб</h1><p>Їжачок збирає зірки ⭐. Відповідай правильно кілька разів поспіль, і зірок буде більше (🔥 ×2, ×3, ×4)! П’ять рівнів, і з кожним складніше. Приблизно 25–30 хвилин.</p><button class="big" id="go">Почати гру</button><details><summary>Нагадування: коли пишемо апостроф</summary><ul><li>Після б, п, в, м, ф перед я, ю, є, ї: <b>п’ять, м’який, в’язати</b>.</li><li>Після твердого р: <b>подвір’я, матір’ю, бур’ян</b>.</li><li>Після префікса на приголосний: <b>з’явитись, під’їхати</b>.</li><li>Лук’ян і споріднені слова.</li><li>Апострофа нема: <b>свято, цвях, морквяний, рясний, порядок, рюкзак</b>.</li></ul><small>За підручником «Українська мова. 5 клас», § 44.</small></details>`;$("#go").onclick=()=>round(0)}
+start();
+</script></body></html>
